@@ -23,18 +23,18 @@ class StreamService{
             } else {
                 // Empty stream directory for new stream.
                 // fs.unlinkSync(`${directory}/output.m3u8`);
-                // fs.unlink(path.join(directory, 'output.m3u8'), err => {
-                //     if (err) throw err;
-                // });
-                // fs.readdir(directory, (err, files) => {
-                //     if (err) throw err;
+                fs.unlink(path.join(directory, 'output.m3u8'), err => {
+                    if (err) throw err;
+                });
+                fs.readdir(directory, (err, files) => {
+                    if (err) throw err;
 
-                //     for (const file of files) {
-                //         fs.unlink(path.join(directory, file), err => {
-                //             if (err) throw err;
-                //         });
-                //     }
-                // });
+                    for (const file of files) {
+                        fs.unlink(path.join(directory, file), err => {
+                            if (err) throw err;
+                        });
+                    }
+                });
             }
 
             // ffmpeg service
@@ -43,9 +43,8 @@ class StreamService{
                 '-s 640x480',
                 '-level 3.0',
                 '-start_number 0',
-                '-hls_time 2',
-                // '-hls_list_size 5',
-                '-hls_wrap 3',
+                '-hls_time 1',
+                '-hls_list_size 5',
                 '-hls_flags omit_endlist',
                 '-hls_flags delete_segments',
                 `-hls_segment_filename ${directory}/%05d.ts`,
