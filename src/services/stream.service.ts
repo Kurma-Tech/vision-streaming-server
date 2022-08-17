@@ -23,9 +23,14 @@ class StreamService{
             } else {
                 // Empty stream directory for new stream.
                 // fs.unlinkSync(`${directory}/output.m3u8`);
-                fs.unlink(path.join(directory, 'output.m3u8'), err => {
-                    if (err) throw err;
-                });
+                try {
+                    fs.unlink(path.join(directory, 'output.m3u8'), err => {
+                        if (err) console.log(err);
+                    });
+                } catch (error) {
+                    
+                }
+                
                 // fs.readdir(directory, (err, files) => {
                 //     if (err) throw err;
 
@@ -54,6 +59,7 @@ class StreamService{
                 .on('end', () => {
                     console.log('end');
                 })
+                .on("error", (error) => console.log("Failed to process video: " + error))
                 .on('progress', function (progress) {
 
                     // check if the file exists
