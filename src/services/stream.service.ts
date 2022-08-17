@@ -22,15 +22,16 @@ class StreamService{
                 fs.mkdirSync(directory);
             } else {
                 // Empty stream directory for new stream.
-                fs.readdir(directory, (err, files) => {
-                    if (err) throw err;
+                fs.unlinkSync(`${directory}/output.m3u8`);
+                // fs.readdir(directory, (err, files) => {
+                //     if (err) throw err;
 
-                    for (const file of files) {
-                        fs.unlink(path.join(directory, file), err => {
-                            if (err) throw err;
-                        });
-                    }
-                });
+                //     for (const file of files) {
+                //         fs.unlink(path.join(directory, file), err => {
+                //             if (err) throw err;
+                //         });
+                //     }
+                // });
             }
 
             // ffmpeg service
