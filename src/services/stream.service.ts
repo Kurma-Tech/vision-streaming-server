@@ -22,7 +22,9 @@ class StreamService{
                 fs.mkdirSync(directory);
             } else {
                 // Empty stream directory for new stream.
-                fs.unlinkSync(`${directory}/output.m3u8`);
+                fs.unlink(path.join(directory, 'output.m3u8'), err => {
+                    if (err) throw err;
+                });
                 // fs.readdir(directory, (err, files) => {
                 //     if (err) throw err;
 
