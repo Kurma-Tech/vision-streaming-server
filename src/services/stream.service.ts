@@ -97,7 +97,7 @@ class StreamService {
                 .run();
 
         } catch (error) {
-
+            res.status(400);
         }
     }
 }
