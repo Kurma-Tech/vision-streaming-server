@@ -7,10 +7,12 @@ const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
 
 import { StreamStartDto } from "@/dtos/stream.dto";
 
-class StreamService{
+class StreamService {
 
     public startStream(streamDeviceData: StreamStartDto, res: Response): void {
-        var headersSent = false
+
+        try {
+            var headersSent = false
 
             ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
@@ -28,15 +30,15 @@ class StreamService{
 
                     });
                 } catch (error) {
-                    
+
                 }
-                
+
                 fs.readdir(directory, (err, files) => {
                     if (err) return;
 
                     for (const file of files) {
                         fs.unlink(path.join(directory, file), err => {
-                            
+
                         });
                     }
                 });
@@ -93,7 +95,11 @@ class StreamService{
                     });
                 })
                 .run();
-      }
+
+        } catch (error) {
+
+        }
+    }
 }
 
 export default StreamService;
